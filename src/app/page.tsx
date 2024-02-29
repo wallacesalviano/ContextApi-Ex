@@ -1,13 +1,13 @@
 "use client"
 
-import { Main } from "./components/Main";
-import { ContextProvider } from "./contexts/Context";
+import { Header } from "./components/Header";
+import { LoggedUserProvider } from "./contexts/Context";
 
 const Page = () => {
-  return (
-    <ContextProvider>
-      <Main/>
-    </ContextProvider>
+  return(
+    <LoggedUserProvider>
+      <Header />
+    </LoggedUserProvider>
   );
 }
 

@@ -1,35 +1,18 @@
-import { useReducer, createContext, ReactNode } from "react";
-import { UserType, userInitialState, userReducer } from "../reducers/useReducer";
-import { reducerActionTypes } from "../Types/reducerActionTypes";
+import { ReactNode, createContext, useState } from "react";
 
-type initialStateType = {
-    user: UserType;
-};
-
-type ContextType = {
-    state: initialStateType;
-    dispatch: React.Dispatch<reducerActionTypes>;
-};
-
-const initialState = {
-    user: userInitialState
+type ILoggedContextType = {
+  name: string;
+  setName: (n: string) => void;
 }
 
-export const Context = createContext<ContextType>({
-    state: initialState,
-    dispatch: () => null,
-});
+export const LoggedUserContext = createContext<ILoggedContextType | null>(null);
 
-export const mainReducer = (state: initialStateType, action: reducerActionTypes) => ({
-    user: userReducer(state.user, action)
-});
-
-export const ContextProvider = ({ children }: { children: ReactNode }) => {
-    const [state, dispatch] = useReducer(mainReducer, initialState);
-
-    return (
-        <Context.Provider value={{ state, dispatch }}>
-            {children}      
-        </Context.Provider>
-    );
-};
+export const LoggedUserProvider = ({children}: {children: ReactNode}) => {
+  const [name, setName] = useState('Wallace');
+  
+  return(
+    <LoggedUserContext.Provider value={{name, setName}}>
+      {children}
+    </LoggedUserContext.Provider>
+  );
+}
